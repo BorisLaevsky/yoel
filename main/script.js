@@ -59,28 +59,64 @@ const logoColors = [
 ];
 
 const logoName   = "Yoel Hayoun";
-let logoFontIndex = 0;
+let logoFontIndex = parseInt(sessionStorage.getItem("logoFontIndex") || "0");
 
 function randomColor() {
   return logoColors[Math.floor(Math.random() * logoColors.length)];
 }
 
-function applyLogoStyle(el) {
+function applyLogoStyle(el, save = true) {
   logoFontIndex = (logoFontIndex + 1) % logoFonts.length;
   el.style.fontFamily = logoFonts[logoFontIndex];
 
   const roll = Math.random();
+  let colorMode, colorValue, letterColors;
+
   if (roll < 0.40) {
-    el.innerHTML  = logoName;
+    el.innerHTML   = logoName;
     el.style.color = "#111";
+    colorMode = "black";
   } else if (roll < 0.75) {
-    el.innerHTML  = logoName;
-    el.style.color = randomColor();
+    colorValue     = randomColor();
+    el.innerHTML   = logoName;
+    el.style.color = colorValue;
+    colorMode = "solid";
   } else {
     el.style.color = "";
-    el.innerHTML = logoName
+    letterColors   = logoName.split("").map(ch => ch === " " ? null : randomColor());
+    el.innerHTML   = logoName
       .split("")
-      .map(ch => ch === " " ? " " : `<span style="color:${randomColor()}">${ch}</span>`)
+      .map((ch, i) => ch === " " ? " " : `<span style="color:${letterColors[i]}">${ch}</span>`)
+      .join("");
+    colorMode = "letters";
+  }
+
+  if (save) {
+    sessionStorage.setItem("logoFontIndex",  logoFontIndex);
+    sessionStorage.setItem("logoColorMode",  colorMode);
+    sessionStorage.setItem("logoColorValue", colorValue || "");
+    sessionStorage.setItem("logoLetterColors", JSON.stringify(letterColors || []));
+  }
+}
+
+function restoreLogoStyle(el) {
+  const colorMode    = sessionStorage.getItem("logoColorMode");
+  const colorValue   = sessionStorage.getItem("logoColorValue");
+  const letterColors = JSON.parse(sessionStorage.getItem("logoLetterColors") || "[]");
+
+  el.style.fontFamily = logoFonts[logoFontIndex];
+
+  if (!colorMode || colorMode === "black") {
+    el.innerHTML   = logoName;
+    el.style.color = "#111";
+  } else if (colorMode === "solid") {
+    el.innerHTML   = logoName;
+    el.style.color = colorValue;
+  } else {
+    el.style.color = "";
+    el.innerHTML   = logoName
+      .split("")
+      .map((ch, i) => ch === " " ? " " : `<span style="color:${letterColors[i]}">${ch}</span>`)
       .join("");
   }
 }
@@ -115,6 +151,11 @@ document.querySelectorAll(".site-nav > a").forEach(a => {
 // ================= LOGO =================
 const logoEl = document.querySelector(".site-name");
 if (logoEl) {
+  // Restore saved state on every page load
+  if (sessionStorage.getItem("logoColorMode")) {
+    restoreLogoStyle(logoEl);
+  }
+
   logoEl.addEventListener("click", e => {
     e.preventDefault();
     applyLogoStyle(logoEl);
