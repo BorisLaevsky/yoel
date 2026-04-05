@@ -46,14 +46,16 @@ a {
 
 .landing-enter {
   font-size: 13px;
-  color: #999;
-  text-decoration: none;
+  font-family: "Courier Prime", "Courier New", monospace;
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   letter-spacing: 0.05em;
   transition: color 0.15s;
 }
 
 .landing-enter:hover {
-  color: #111;
+  color: #999;
 }
 
 /* ================= HEADER / NAV ================= */
