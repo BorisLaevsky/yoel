@@ -3,14 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Artist Name</title>
+  <title>Yoel Hayoun</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=Libre+Baskerville&family=Cormorant+Garamond&family=Oswald&family=Bebas+Neue&family=Courier+Prime&family=Space+Mono&family=Roboto+Mono&family=Playfair+Display&family=DM+Serif+Display&family=Bodoni+Moda&family=Pacifico&family=Permanent+Marker&family=Righteous&family=Fredoka+One&family=Boogaloo&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="main/styles.css">
 </head>
-<body>
+<body class="landing-body">
 
-<a href="main/index.html" class="landing-link">
-  <img src="main/images/hero.jpg" alt="">
-</a>
+  <div class="landing-wrap">
+    <h1 class="landing-name" id="landing-name">Yoel Hayoun</h1>
+    <a href="main/index.html" class="landing-enter">enter &rarr;</a>
+  </div>
 
+  <script>
+    const fonts = [
+      "Helvetica Neue, Helvetica, Arial, sans-serif",
+      "'Times New Roman', Times, serif",
+      "Georgia, serif",
+      "'EB Garamond', serif",
+      "'Libre Baskerville', serif",
+      "'Cormorant Garamond', serif",
+      "Impact, Haettenschweiler, sans-serif",
+      "'Oswald', sans-serif",
+      "'Bebas Neue', sans-serif",
+      "'Courier Prime', monospace",
+      "'Space Mono', monospace",
+      "'Roboto Mono', monospace",
+      "'Playfair Display', serif",
+      "'DM Serif Display', serif",
+      "'Bodoni Moda', serif",
+      "'Pacifico', cursive",
+      "'Permanent Marker', cursive",
+      "'Righteous', cursive",
+      "Papyrus, fantasy",
+      "'Comic Sans MS', 'Chalkboard SE', cursive",
+      "'Fredoka One', cursive",
+      "'Boogaloo', cursive",
+    ];
+
+    const colors = [
+      "#e63b2e","#e8720c","#d4a017","#2e7d32",
+      "#1565c0","#6a1b9a","#ad1457","#00838f",
+      "#4e342e","#37474f",
+    ];
+
+    const name = "Yoel Hayoun";
+    const el   = document.getElementById("landing-name");
+    let fontIndex = 0;
+
+    function randomColor() {
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    el.addEventListener("click", () => {
+      fontIndex = (fontIndex + 1) % fonts.length;
+      el.style.fontFamily = fonts[fontIndex];
+
+      const roll = Math.random();
+      if (roll < 0.40) {
+        el.innerHTML   = name;
+        el.style.color = "#111";
+      } else if (roll < 0.75) {
+        el.innerHTML   = name;
+        el.style.color = randomColor();
+      } else {
+        el.style.color = "";
+        el.innerHTML   = name
+          .split("")
+          .map(ch => ch === " " ? " " : `<span style="color:${randomColor()}">${ch}</span>`)
+          .join("");
+      }
+    });
+  </script>
 </body>
 </html>

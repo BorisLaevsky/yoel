@@ -4,26 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yoel Hayoun</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=Libre+Baskerville&family=Cormorant+Garamond&family=Oswald&family=Bebas+Neue&family=Courier+Prime&family=Space+Mono&family=Roboto+Mono&family=Playfair+Display&family=DM+Serif+Display&family=Bodoni+Moda&family=Pacifico&family=Permanent+Marker&family=Righteous&family=Fredoka+One&family=Boogaloo&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
   <header class="site-header">
-    <a href="index.html" class="site-name">
-      <img src="images/logo.gif" alt="Yoel Hayoun">
-    </a>
+    <a href="index.html" class="site-name">Yoel Hayoun</a>
     <nav class="site-nav">
-      <a href="index.html">Works</a>
-      <a href="info.html">Info</a>
-      <a href="contact.html">Contact</a>
+      <div id="year-nav"></div>
+      <a href="?page=info">Info</a>
+      <a href="?page=contact">Contact</a>
     </nav>
   </header>
 
-  <main class="works-grid" id="works-grid"></main>
+  <main id="main-content"></main>
 
+  <!-- LIGHTBOX -->
   <div id="lightbox">
     <button id="close">×</button>
-    <img id="lightbox-img" src="" alt="">
+    <button id="lb-prev">&#8592;</button>
+    <button id="lb-next">&#8594;</button>
+    <div class="lb-inner">
+      <img id="lightbox-img" src="" alt="">
+      <p id="lightbox-desc"></p>
+    </div>
   </div>
 
   <script src="script.js"></script>

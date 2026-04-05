@@ -19,20 +19,41 @@ a {
 }
 
 /* ================= LANDING ================= */
-.landing-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
+.landing-body {
+  margin: 0;
   height: 100vh;
-  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.landing-link img {
-  max-width: 80%;
-  max-height: 80vh;
-  object-fit: contain;
-  display: block;
+.landing-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+}
+
+.landing-name {
+  font-size: clamp(36px, 8vw, 96px);
+  font-weight: normal;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.1;
+  transition: font-family 0.05s;
+}
+
+.landing-enter {
+  font-size: 13px;
+  color: #999;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.15s;
+}
+
+.landing-enter:hover {
+  color: #111;
 }
 
 /* ================= HEADER / NAV ================= */
@@ -47,30 +68,49 @@ a {
   z-index: 100;
 }
 
-.site-name img {
-  height: 26px;
-  width: auto;
-  display: block;
+.site-name {
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
 }
 
 .site-nav {
   display: flex;
+  align-items: center;
   gap: 24px;
 }
 
-.site-nav a {
+/* Year buttons sit inline with Info / Contact */
+#year-nav {
+  display: flex;
+  gap: 24px;
+}
+
+#year-nav a {
   font-size: 13px;
   color: #999;
   transition: color 0.15s;
 }
 
-.site-nav a:hover,
-.site-nav a.active {
+#year-nav a:hover,
+#year-nav a.active {
+  color: #111;
+}
+
+.site-nav > a {
+  font-size: 13px;
+  color: #999;
+  transition: color 0.15s;
+}
+
+.site-nav > a:hover,
+.site-nav > a.active {
   color: #111;
 }
 
 /* ================= WORKS GRID ================= */
-#works-grid {
+.works-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 40px 32px;
@@ -97,15 +137,35 @@ a {
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 40px;
-  cursor: zoom-out;
+  padding: 60px 80px;
 }
 
-#lightbox img {
+.lb-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 90vw;
+}
+
+#lightbox-desc {
+  text-align: left;
+}
+
+#lightbox-img {
   max-width: 100%;
-  max-height: 92vh;
+  max-height: 80vh;
   object-fit: contain;
-  cursor: default;
+  display: block;
+}
+
+#lightbox-desc {
+  color: #aaa;
+  font-size: 12px;
+  text-align: center;
+  max-width: 480px;
+  line-height: 1.5;
+  display: none;
 }
 
 #close {
@@ -121,9 +181,28 @@ a {
   transition: color 0.15s;
 }
 
-#close:hover {
-  color: #fff;
+#close:hover { color: #fff; }
+
+#lb-prev,
+#lb-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 16px;
+  transition: color 0.15s;
+  user-select: none;
 }
+
+#lb-prev:hover,
+#lb-next:hover { color: #fff; }
+
+#lb-prev { left: 16px; }
+#lb-next { right: 16px; }
 
 /* ================= TEXT PAGES ================= */
 .text-page {
@@ -132,18 +211,14 @@ a {
   line-height: 1.6;
 }
 
-.text-page p {
-  margin-bottom: 12px;
-}
+.text-page p { margin-bottom: 12px; }
 
 .text-page a {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-.text-page .cv {
-  margin-top: 40px;
-}
+.text-page .cv { margin-top: 40px; }
 
 .text-page .cv h2 {
   font-size: 11px;
@@ -154,27 +229,52 @@ a {
   margin-bottom: 16px;
 }
 
-.text-page .cv ul {
-  list-style: none;
-}
-
-.text-page .cv li {
-  margin-bottom: 6px;
-}
+.text-page .cv ul { list-style: none; }
+.text-page .cv li { margin-bottom: 6px; }
 
 /* ================= RESPONSIVE ================= */
-@media (max-width: 600px) {
-  #works-grid {
+@media (max-width: 700px) {
+  .works-grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 28px 20px;
-    padding: 32px 24px 60px;
+    gap: 28px 16px;
+    padding: 32px 20px 60px;
   }
 
-  .site-header {
-    padding: 14px 18px 12px;
+  .site-header  { padding: 14px 18px 12px; }
+  .site-nav     { gap: 16px; }
+  #year-nav     { gap: 14px; }
+
+  /* Lightbox — minimal padding, image fills the screen */
+  #lightbox {
+    padding: 40px 8px 16px;
+    align-items: center;
   }
 
-  .site-nav {
-    gap: 16px;
+  #lightbox-img {
+    max-height: 85vh;
+  }
+
+  .lb-inner {
+    gap: 8px;
+    max-width: 100%;
+  }
+
+  #lb-prev,
+  #lb-next {
+    top: auto;
+    bottom: 0;
+    transform: none;
+    font-size: 18px;
+    padding: 10px 14px;
+    color: #666;
+  }
+
+  #lb-prev { left: 0; }
+  #lb-next { right: 0; }
+
+  #close {
+    top: 8px;
+    right: 12px;
+    font-size: 22px;
   }
 }
